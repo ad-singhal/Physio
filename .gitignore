@@ -5,10 +5,9 @@ node_modules/
 web/.next/
 web/out/
 
-# Env files
-.env*
-web/.env*
-!web/.env.example
+# Env files — ignore secrets, keep the example template
+.env.local
+web/.env.local
 
 # Build outputs
 web/build/

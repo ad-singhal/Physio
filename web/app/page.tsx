@@ -35,13 +35,26 @@ export default function LoginPage() {
   async function onSubmit(values: LoginFormValues) {
     setError(null)
 
-    const { error: authError } = await supabase.auth.signInWithPassword({
+    const { data, error: authError } = await supabase.auth.signInWithPassword({
       email: values.email,
       password: values.password,
     })
 
-    if (authError) {
+    if (authError || !data.user) {
       setError('Incorrect email or password. Please try again.')
+      return
+    }
+
+    // Confirm this account has a physio registration
+    const { data: physio } = await supabase
+      .from('physiotherapists')
+      .select('id')
+      .eq('id', data.user.id)
+      .single()
+
+    if (!physio) {
+      await supabase.auth.signOut()
+      setError('No physio account found for this email. Please apply to join first.')
       return
     }
 

@@ -3,6 +3,329 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      // Shared tables (D-001 through D-013 from iOS schema)
+      users: {
+        Row: {
+          id: string
+          email: string
+          full_name: string
+          profile_photo_url: string | null
+          date_of_birth: string | null
+          gender: string | null
+          phone: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          email: string
+          full_name: string
+          profile_photo_url?: string | null
+          date_of_birth?: string | null
+          gender?: string | null
+          phone?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          full_name?: string
+          profile_photo_url?: string | null
+          date_of_birth?: string | null
+          gender?: string | null
+          phone?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      onboarding_responses: {
+        Row: {
+          id: string
+          patient_id: string
+          general_info: Json
+          health_profile: Json
+          pain_profile: Json
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          patient_id: string
+          general_info?: Json
+          health_profile?: Json
+          pain_profile?: Json
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          patient_id?: string
+          general_info?: Json
+          health_profile?: Json
+          pain_profile?: Json
+          created_at?: string
+        }
+        Relationships: []
+      }
+      matches: {
+        Row: {
+          id: string
+          physio_id: string
+          patient_id: string
+          status: 'pending' | 'active' | 'completed' | 'cancelled'
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          physio_id: string
+          patient_id: string
+          status?: 'pending' | 'active' | 'completed' | 'cancelled'
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          physio_id?: string
+          patient_id?: string
+          status?: 'pending' | 'active' | 'completed' | 'cancelled'
+          created_at?: string
+        }
+        Relationships: []
+      }
+      consultations: {
+        Row: {
+          id: string
+          physio_id: string
+          patient_id: string
+          match_id: string
+          scheduled_at: string
+          duration_minutes: number | null
+          status: 'scheduled' | 'completed' | 'cancelled'
+          consultation_type: 'online' | 'in_person' | 'home_visit' | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          physio_id: string
+          patient_id: string
+          match_id: string
+          scheduled_at: string
+          duration_minutes?: number | null
+          status?: 'scheduled' | 'completed' | 'cancelled'
+          consultation_type?: 'online' | 'in_person' | 'home_visit' | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          physio_id?: string
+          patient_id?: string
+          match_id?: string
+          scheduled_at?: string
+          duration_minutes?: number | null
+          status?: 'scheduled' | 'completed' | 'cancelled'
+          consultation_type?: 'online' | 'in_person' | 'home_visit' | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      programs: {
+        Row: {
+          id: string
+          physio_id: string
+          patient_id: string
+          match_id: string | null
+          title: string
+          description: string | null
+          target_condition: string | null
+          status: 'draft' | 'published'
+          duration_weeks: number
+          published_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          physio_id: string
+          patient_id: string
+          match_id?: string | null
+          title: string
+          description?: string | null
+          target_condition?: string | null
+          status?: 'draft' | 'published'
+          duration_weeks?: number
+          published_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          physio_id?: string
+          patient_id?: string
+          match_id?: string | null
+          title?: string
+          description?: string | null
+          target_condition?: string | null
+          status?: 'draft' | 'published'
+          duration_weeks?: number
+          published_at?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      program_days: {
+        Row: {
+          id: string
+          program_id: string
+          week_number: number
+          day_number: number
+          title: string | null
+          exercises: Json
+          order_index: number
+        }
+        Insert: {
+          id?: string
+          program_id: string
+          week_number: number
+          day_number: number
+          title?: string | null
+          exercises?: Json
+          order_index?: number
+        }
+        Update: {
+          id?: string
+          program_id?: string
+          week_number?: number
+          day_number?: number
+          title?: string | null
+          exercises?: Json
+          order_index?: number
+        }
+        Relationships: []
+      }
+      exercises: {
+        Row: {
+          id: string
+          title: string
+          description: string | null
+          body_region: string | null
+          difficulty: 'beginner' | 'intermediate' | 'advanced' | null
+          video_url: string | null
+          thumbnail_url: string | null
+          instructions: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          description?: string | null
+          body_region?: string | null
+          difficulty?: 'beginner' | 'intermediate' | 'advanced' | null
+          video_url?: string | null
+          thumbnail_url?: string | null
+          instructions?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string | null
+          body_region?: string | null
+          difficulty?: 'beginner' | 'intermediate' | 'advanced' | null
+          video_url?: string | null
+          thumbnail_url?: string | null
+          instructions?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      session_logs: {
+        Row: {
+          id: string
+          patient_id: string
+          program_id: string
+          program_day_id: string | null
+          completed_at: string
+          pain_score_before: number | null
+          pain_score_after: number | null
+          notes: string | null
+        }
+        Insert: {
+          id?: string
+          patient_id: string
+          program_id: string
+          program_day_id?: string | null
+          completed_at?: string
+          pain_score_before?: number | null
+          pain_score_after?: number | null
+          notes?: string | null
+        }
+        Update: {
+          id?: string
+          patient_id?: string
+          program_id?: string
+          program_day_id?: string | null
+          completed_at?: string
+          pain_score_before?: number | null
+          pain_score_after?: number | null
+          notes?: string | null
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          id: string
+          match_id: string
+          sender_id: string
+          sender_type: 'physio' | 'patient'
+          content: string
+          created_at: string
+          read_at: string | null
+        }
+        Insert: {
+          id?: string
+          match_id: string
+          sender_id: string
+          sender_type: 'physio' | 'patient'
+          content: string
+          created_at?: string
+          read_at?: string | null
+        }
+        Update: {
+          id?: string
+          match_id?: string
+          sender_id?: string
+          sender_type?: 'physio' | 'patient'
+          content?: string
+          created_at?: string
+          read_at?: string | null
+        }
+        Relationships: []
+      }
+      payment_plans: {
+        Row: {
+          id: string
+          program_id: string
+          tier_name: string
+          fee: number
+          call_frequency: string | null
+          features: string[]
+          status: 'active' | 'inactive'
+        }
+        Insert: {
+          id?: string
+          program_id: string
+          tier_name: string
+          fee?: number
+          call_frequency?: string | null
+          features?: string[]
+          status?: 'active' | 'inactive'
+        }
+        Update: {
+          id?: string
+          program_id?: string
+          tier_name?: string
+          fee?: number
+          call_frequency?: string | null
+          features?: string[]
+          status?: 'active' | 'inactive'
+        }
+        Relationships: []
+      }
+      // Physio-specific tables
       physiotherapists: {
         Row: {
           id: string
@@ -327,3 +650,146 @@ export type PhysioConditionTreated = Database['public']['Tables']['physio_condit
 export type AvailabilitySlot = Database['public']['Tables']['availability_slots']['Row']
 export type ConsultationNote = Database['public']['Tables']['consultation_notes']['Row']
 export type ProgramDraft = Database['public']['Tables']['program_drafts']['Row']
+
+// Shared tables (from iOS schema, D-001 through D-013)
+export type Patient = {
+  id: string
+  email: string
+  full_name: string
+  profile_photo_url: string | null
+  date_of_birth: string | null
+  gender: string | null
+  phone: string | null
+  created_at: string
+}
+
+export type OnboardingResponse = {
+  id: string
+  patient_id: string
+  general_info: Json
+  health_profile: Json
+  pain_profile: Json
+  created_at: string
+}
+
+export type Match = {
+  id: string
+  physio_id: string
+  patient_id: string
+  status: 'pending' | 'active' | 'completed' | 'cancelled'
+  created_at: string
+  patient?: Patient
+}
+
+export type Consultation = {
+  id: string
+  physio_id: string
+  patient_id: string
+  match_id: string
+  scheduled_at: string
+  duration_minutes: number | null
+  status: 'scheduled' | 'completed' | 'cancelled'
+  consultation_type: 'online' | 'in_person' | 'home_visit' | null
+  created_at: string
+}
+
+export type Program = {
+  id: string
+  physio_id: string
+  patient_id: string
+  match_id: string | null
+  title: string
+  description: string | null
+  target_condition: string | null
+  status: 'draft' | 'published'
+  duration_weeks: number
+  published_at: string | null
+  created_at: string
+}
+
+export type ProgramDay = {
+  id: string
+  program_id: string
+  week_number: number
+  day_number: number
+  title: string | null
+  exercises: Json
+  order_index: number
+}
+
+export type Exercise = {
+  id: string
+  title: string
+  description: string | null
+  body_region: string | null
+  difficulty: 'beginner' | 'intermediate' | 'advanced' | null
+  video_url: string | null
+  thumbnail_url: string | null
+  instructions: string | null
+  created_at: string
+}
+
+export type SessionLog = {
+  id: string
+  patient_id: string
+  program_id: string
+  program_day_id: string | null
+  completed_at: string
+  pain_score_before: number | null
+  pain_score_after: number | null
+  notes: string | null
+}
+
+export type Message = {
+  id: string
+  match_id: string
+  sender_id: string
+  sender_type: 'physio' | 'patient'
+  content: string
+  created_at: string
+  read_at: string | null
+}
+
+export type PaymentPlan = {
+  id: string
+  program_id: string
+  tier_name: string
+  fee: number
+  call_frequency: string | null
+  features: string[]
+  status: 'active' | 'inactive'
+}
+
+// Programme builder local types
+export type BuilderExercise = {
+  exerciseId: string
+  title: string
+  sets: number
+  reps: number
+  restSeconds: number
+  order: number
+}
+
+export type BuilderDay = {
+  id: string
+  weekNumber: number
+  dayNumber: number
+  title: string
+  exercises: BuilderExercise[]
+}
+
+export type BuilderTier = {
+  name: string
+  fee: number
+  callFrequency: string
+  features: string[]
+}
+
+export type BuilderState = {
+  title: string
+  description: string
+  targetCondition: string
+  durationWeeks: number
+  tiers: BuilderTier[]
+  days: BuilderDay[]
+}

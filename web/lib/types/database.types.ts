@@ -79,6 +79,7 @@ export type Database = {
           last_verified_at?: string | null
           created_at?: string
         }
+        Relationships: []
       }
       physio_credentials: {
         Row: {
@@ -123,6 +124,15 @@ export type Database = {
           state_council_number?: string
           state_council_verified_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "physio_credentials_physio_id_fkey"
+            columns: ["physio_id"]
+            isOneToOne: true
+            referencedRelation: "physiotherapists"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       physio_certifications: {
         Row: {
@@ -149,6 +159,15 @@ export type Database = {
           year?: number
           doc_url?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "physio_certifications_physio_id_fkey"
+            columns: ["physio_id"]
+            isOneToOne: false
+            referencedRelation: "physiotherapists"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       physio_conditions_treated: {
         Row: {
@@ -172,6 +191,15 @@ export type Database = {
           volume_bucket?: 'low' | 'medium' | 'high'
           notes?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "physio_conditions_treated_physio_id_fkey"
+            columns: ["physio_id"]
+            isOneToOne: false
+            referencedRelation: "physiotherapists"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       availability_slots: {
         Row: {
@@ -198,6 +226,15 @@ export type Database = {
           end_time?: string
           status?: 'available' | 'booked' | 'blocked'
         }
+        Relationships: [
+          {
+            foreignKeyName: "availability_slots_physio_id_fkey"
+            columns: ["physio_id"]
+            isOneToOne: false
+            referencedRelation: "physiotherapists"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       consultation_notes: {
         Row: {
@@ -224,6 +261,15 @@ export type Database = {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "consultation_notes_physio_id_fkey"
+            columns: ["physio_id"]
+            isOneToOne: false
+            referencedRelation: "physiotherapists"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       program_drafts: {
         Row: {
@@ -247,11 +293,29 @@ export type Database = {
           draft_state?: Json
           last_saved_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "program_drafts_physio_id_fkey"
+            columns: ["physio_id"]
+            isOneToOne: false
+            referencedRelation: "physiotherapists"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
-    Views: Record<string, never>
-    Functions: Record<string, never>
-    Enums: Record<string, never>
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
 }
 
